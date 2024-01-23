@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Apollo, gql } from 'apollo-angular';
 import { take, tap, pluck } from 'rxjs/operators';
 import { Foods } from '../model/food';
-import { FoodService } from './food.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,7 @@ import { FoodService } from './food.service';
 export class SearchService {
   public foods: Foods[] = [];
 
-  constructor(private apollo: Apollo, private food: FoodService) {}
+  constructor(private apollo: Apollo) {}
 
   filterData(valueToSearch: string): void {
     const QUERY_BY_NAME = gql`

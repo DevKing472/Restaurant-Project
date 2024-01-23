@@ -5,7 +5,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Foods } from 'src/app/model/food';
 import { User } from 'src/app/model/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { FoodService } from 'src/app/services/food.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -25,8 +24,7 @@ export class NavbarComponent implements OnInit {
     public auth: AuthService,
     private ruta: Router,
     private userService: UserService,
-    private activated: ActivatedRoute,
-    private food: FoodService
+    private activated: ActivatedRoute
   ) {
     this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -41,17 +39,17 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getAll();
-    this.activated.params.subscribe((params) => {
-      if (params['searchItem'])
-        this.foods = this.food
-          .getAll()
-          .filter((food) =>
-            food.foodName
-              .toLowerCase()
-              .includes(params['searchItem'].toLowerCase())
-          );
-      else this.foods = this.food.getAll();
-    });
+    // this.activated.params.subscribe((params) => {
+    //   if (params['searchItem'])
+    //     this.foods = this.food
+    //       .getAll()
+    //       .filter((food) =>
+    //         food.foodName
+    //           .toLowerCase()
+    //           .includes(params['searchItem'].toLowerCase())
+    //       );
+    //   else this.foods = this.food.getAll();
+    // });
   }
 
   isloged = () => this.auth.loggedIn();

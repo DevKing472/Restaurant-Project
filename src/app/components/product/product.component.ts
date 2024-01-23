@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable, map } from 'rxjs';
+import { Category } from 'src/app/model/category';
 import { Foods } from 'src/app/model/food';
-import { FoodService } from 'src/app/services/food.service';
+import { Product } from 'src/app/model/product.model';
+import { ProductService } from 'src/app/services/product.service';
 import { CategoryService } from 'src/app/services/shared/category.service';
 
 @Component({
@@ -9,17 +12,21 @@ import { CategoryService } from 'src/app/services/shared/category.service';
   styleUrls: ['./product.component.scss'],
 })
 export class ProductComponent implements OnInit {
-  public foods: Foods[] = [];
-  public categories$ = this.categoryService.getAll();
+  public products$: Observable<Product[]> = this.productService.getAll();
+  public categories$: Observable<Category[]> = this.categoryService.getAll();
 
   constructor(
-    private food: FoodService,
+    private productService: ProductService,
     private categoryService: CategoryService
-  ) {
-    console.log(this.categories$);
-  }
+  ) {}
 
-  ngOnInit(): void {
-    this.foods = this.food.getAll();
+  ngOnInit(): void {}
+
+  getProductsByCategory(categoryId: number): Observable<Product[]> {
+    return this.products$.pipe(
+      map((products: Product[]) =>
+        products.filter((product) => product.categoryId === categoryId)
+      )
+    );
   }
 }
