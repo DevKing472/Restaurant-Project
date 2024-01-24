@@ -1,4 +1,4 @@
-<div class="row" *ngIf="productSelected$ === undefined">
+<div class="row mb-4" *ngIf="productSelected$ === undefined">
   <ng-container *ngFor="let category of categories$ | async">
     <h2 class="text-center text-dark bg-light rounded border border-dark pt-2 pb-2">
       {{ category.name }}</h2>
